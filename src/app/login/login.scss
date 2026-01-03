@@ -1,0 +1,36 @@
+.sl-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .sl-box{
+    margin-top: 25vh;
+    width: 10vw;
+    padding: 2em 1em 1em 1em;
+    border: 1px black solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+        .sl-credentials-box{
+            display: flex;
+            flex-direction: column;
+
+            .sl-label-box{
+                padding: 1em 0;
+                display: flex;
+                justify-content: center;
+            }
+
+            .sl-input-box{
+                padding: 0.5em 0;
+            }
+        }
+
+        .sl-submit-button{
+            padding: 0.5em 1.5em;
+            margin: 3em 0 1em 0;
+        }
+    }
+}
