@@ -11,8 +11,13 @@
         </div>
         <div class="sl-desktop-login-box">
             <div [routerLink]="['']">Home</div>
-            <div [routerLink]="['/login']">Login</div>
-            <div [routerLink]="['/register']">Register</div>
+            @if(isLoggedIn$ | async) {
+                <div>LOGGED IN</div>
+                <div (click)="logout()">Log Out</div>
+            } @else {
+                <div [routerLink]="['/login']">Login</div>
+                <div [routerLink]="['/register']">Register</div>
+            }
         </div>
         @if(isMenuOpen) {
             <ul class="sl-mobile-nav-links">

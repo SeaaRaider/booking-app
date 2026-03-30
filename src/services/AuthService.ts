@@ -1,22 +1,26 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
-import { LoginCredentials } from '../models/AuthModel';
+import { LoginData } from '../interfaces/LoginInterface';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private readonly API_URL = 'http://twoje-api.pl/api/auth';
-  private loggedIn = new BehaviorSubject<boolean>(this.hasToken());
+  private readonly API_URL = 'http://localhost:5005';
+  private loggedIn = new BehaviorSubject<boolean>(false);
 
-  constructor(private http: HttpClient) {}
-
-  register(userData: any) {
-    return this.http.post(`${this.API_URL}/register`, userData);
+  constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object
+  ) {
+    this.loggedIn.next(this.hasToken());
   }
 
-  login(credentials: LoginCredentials) {
-    return this.http.post<any>(`${this.API_URL}/login`, credentials).pipe(
+  register(userData: any) {
+    return this.http.post(`${this.API_URL}/api/account/register`, userData);
+  }
+
+  login(credentials: LoginData) {
+    return this.http.post<any>(`${this.API_URL}/api/account/login`, credentials).pipe(
       tap(res => {
         localStorage.setItem('token', res.token);
         this.loggedIn.next(true);
@@ -26,8 +30,11 @@ export class AuthService {
     );
   }
 
-  private hasToken(): boolean {
-    return !!localStorage.getItem('token');
+private hasToken(): boolean {
+    if (isPlatformBrowser(this.platformId)) {
+      return !!localStorage.getItem('token');
+    }
+    return false;
   }
 
   logout() {

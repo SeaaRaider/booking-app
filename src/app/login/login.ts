@@ -1,27 +1,38 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/AuthService';
-import { LoginCredentials } from '../../models/AuthModel';
+import { LoginData } from '../../interfaces/LoginInterface';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './login.html',
   styleUrl: './login.scss',
 })
 export class Login {
-loginData: LoginCredentials = { email: '', password: '' };
+  
+  loginData = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required])
+  });
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  onLogin() {
-    this.authService.login(this.loginData).subscribe({
+  onSubmit() {
+    if(this.loginData.valid) {
+      this.login(this.loginData.value as LoginData);
+    }
+  }
+
+  login(credentials: LoginData) {
+    this.authService.login(credentials).subscribe({
       next: (response: any) => {
-        console.log('Zalogowano pomyślnie!');
-        //this.router.navigate(['']);
+        this.router.navigate(['']);
         console.log('Odpowiedź z serwera:', response);
-        
       },
+      
       error: (err: any) => {
         alert('Błąd logowania: ' + err.error.message);
       }
