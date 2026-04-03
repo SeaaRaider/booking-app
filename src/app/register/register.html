@@ -1,14 +1,33 @@
-<div class="sl-login-box">
-    <form>
-        <div>
-            <label for="username">Username</label>
-            <input type="text" placeholder="Enter username" required>
-        </div>
-        <div>
-            <label for="password">Password</label>
-            <input type="password" placeholder="Enter password" required>
-            <input type="password" placeholder="Confirm password" required>
-        </div>
-        <button type="submit">Register</button>
-    </form>
+<div class="sl-container">
+    <div class="sl-box">
+        <form class="sl-credentials-box" [formGroup]="tempRegisterData" (ngSubmit)="onSubmit()">
+                <label class="sl-label-box" for="username">Username<span class="sl-star-text">*</span></label>
+                <input class="sl-input-box" type="text" placeholder="Enter username" formControlName="email" required>
+                @if (tempRegisterData.controls.email.touched && tempRegisterData.controls.email.invalid) {
+                    @if (tempRegisterData.controls.email.hasError('required')) {
+                        <p class="sl-confirm-password-error">Email is required.</p>
+                    } @else if (tempRegisterData.controls.email.hasError('email')) {
+                        <p class="sl-confirm-password-error">Enter a valid email address.</p>
+                    }
+                }
+                <label class="sl-label-box" for="password">Password<span class="sl-star-text">*</span></label>
+                <input class="sl-input-box" type="password" placeholder="Enter password" formControlName="password" required>
+                <label class="sl-label-box" for="confirmPassword">Confirm Password<span class="sl-star-text">*</span></label>
+                <input class="sl-input-box" type="password" placeholder="Confirm password" formControlName="confirmPassword" required>
+
+                @if (tempRegisterData.controls.password.invalid && tempRegisterData.controls.password.touched && tempRegisterData.controls.confirmPassword.touched) {
+                    @if (tempRegisterData.controls.password.hasError('required')) {
+                        <p class="sl-confirm-password-error">Password is required.</p>
+                    }
+                    @if (tempRegisterData.controls.password.hasError('minlength') || tempRegisterData.controls.password.hasError('maxlength')) {
+                        <p class="sl-confirm-password-error">Password has to be at least 6 characters long and at most 20 characters long.</p>
+                    }
+                }
+                
+                @if (isConfirmPasswordWrong) {
+                    <p class="sl-confirm-password-error">Passwords do not match</p>
+                }
+            <button class="sl-submit-button" type="submit">Register</button>
+        </form>
+    </div>
 </div>

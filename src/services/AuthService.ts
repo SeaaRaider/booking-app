@@ -15,8 +15,13 @@ export class AuthService {
     this.loggedIn.next(this.hasToken());
   }
 
-  register(userData: any) {
-    return this.http.post(`${this.API_URL}/api/account/register`, userData);
+  register(registerData: LoginData) {
+    return this.http.post<any>(`${this.API_URL}/api/account/register`, registerData).pipe(
+      tap(res => {
+        localStorage.setItem('token', res.token);
+        this.loggedIn.next(true);
+      })
+    );
   }
 
   login(credentials: LoginData) {
