@@ -1,23 +1,14 @@
 <nav>
     <div class="sl-navbar-box">
         <div>Booking app</div>
+
         <div class="sl-mobile-login-box">
             <div [routerLink]="['']">Home</div>
             <div class="sl-menu-icon" (click)="toggleMenu()">
-                <div></div>
-                <div></div>
-                <div></div>
+                <p><!-- Style Filler --></p>
+                <p><!-- Style Filler --></p>
+                <p><!-- Style Filler --></p>
             </div>
-        </div>
-        <div class="sl-desktop-login-box">
-            <div [routerLink]="['']">Home</div>
-            @if(isLoggedIn$ | async) {
-                <div>LOGGED IN</div>
-                <div (click)="logout()">Log Out</div>
-            } @else {
-                <div [routerLink]="['/login']">Login</div>
-                <div [routerLink]="['/register']">Register</div>
-            }
         </div>
         @if(isMenuOpen) {
             <ul class="sl-mobile-nav-links">
@@ -27,5 +18,16 @@
                 <li><a href="">Kontakt</a></li>
             </ul>
         }
+
+        <div class="sl-desktop-login-box">
+            <div class="sl-dim-on-hover-style" [routerLink]="['']">Home</div>
+            @if(isLoggedIn$ | async) {
+                <div class="sl-dim-on-hover-style" (click)="logout()">Log Out</div>
+            } @else {
+                <div class="sl-dim-on-hover-style" [routerLink]="['/login']">Login</div>
+                <div class="sl-dim-on-hover-style" [routerLink]="['/register']">Register</div>
+            }
+        </div>
+
     </div>
 </nav>
