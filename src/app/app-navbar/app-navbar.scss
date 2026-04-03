@@ -11,6 +11,12 @@
     color: white;
     position: relative;
 
+    .sl-dim-on-hover-style:hover{
+    transition: opacity 0.2s ease;
+    opacity: 0.75;
+    cursor: pointer;
+    }
+
     .sl-desktop-login-box{
         display: flex;
         gap: 1em;
@@ -40,7 +46,7 @@
             
             .sl-menu-icon{
                 
-                div {
+                p {
                     width: 35px;
                     height: 5px;
                     background-color: white;

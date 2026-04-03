@@ -1,11 +1,12 @@
 <div class="sl-container">
     <div class="sl-box">
-        <form class="sl-credentials-box">
-                <label class="sl-label-box" for="username">Username<p class="sl-star-text">*</p></label>
-                <input class="sl-input-box" type="text" placeholder="Enter username" required>
-                <label class="sl-label-box" for="password">Password<p class="sl-star-text">*</p></label>
-                <input class="sl-input-box" type="password" placeholder="Enter password" required>
+        <form class="sl-credentials-box" [formGroup]="loginData" (ngSubmit)="onSubmit()">
+                <label class="sl-label-box" for="username">Username<span class="sl-star-text">*</span></label>
+                <input class="sl-input-box" type="text" placeholder="Enter username" formControlName="email" required>
+                <label class="sl-label-box" for="password">Password<span class="sl-star-text">*</span></label>
+                <input class="sl-input-box" type="password" placeholder="Enter password" formControlName="password" required>
             <button class="sl-submit-button" type="submit">Login</button>
         </form>
+        <div class="sl-forgot-password-box">Forgot password</div>
     </div>
 </div>
